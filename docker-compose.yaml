@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - API_BASE_URL=http://backend:8000
+    networks:
+      - cvlb
+
+networks:
+  cvlb:
+    external: true

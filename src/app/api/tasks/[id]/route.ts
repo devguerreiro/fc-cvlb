@@ -4,9 +4,10 @@ import { API_BASE_URL } from "@/environment";
 
 export async function DELETE(
   _: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const res = await fetch(`${API_BASE_URL}/tasks/${params.id}`, {
+  const { id } = await params;
+  const res = await fetch(`${API_BASE_URL}/tasks/${id}`, {
     method: "DELETE",
   });
   return NextResponse.json(await res.json());
@@ -14,9 +15,9 @@ export async function DELETE(
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = params;
+  const { id } = await params;
   const body = await req.json();
 
   const res = await fetch(`${API_BASE_URL}/tasks/${id}`, {
