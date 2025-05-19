@@ -25,6 +25,15 @@ export default function Home() {
     fetchTasks();
   };
 
+  const handleToggle = async (id: number, completed: boolean) => {
+    await fetch(`/api/tasks/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ completed }),
+    });
+    fetchTasks();
+  };
+
   useEffect(() => {
     fetchTasks();
   }, []);
@@ -35,7 +44,7 @@ export default function Home() {
         📋 Lista de Tarefas
       </h1>
       <TaskForm onAdd={fetchTasks} />
-      <TaskList tasks={tasks} onDelete={handleDelete} />
+      <TaskList tasks={tasks} onDelete={handleDelete} onToggle={handleToggle} />
     </main>
   );
 }
